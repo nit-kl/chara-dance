@@ -1,5 +1,8 @@
 # Browser checks
 
+Run `node tests/motion-smoothness.mjs` for bundled motion loop continuity and
+angular speed/acceleration limits, including the loop seam. This needs no browser.
+
 Run `npm run dev`, then open these paths on the local Vite URL:
 
 - `/tests/validation.html`: Milestone 01 PNG validation (12 checks).
@@ -17,6 +20,10 @@ Run `npm run dev`, then open these paths on the local Vite URL:
 - `/tests/polish.html`: Milestone 07 onboarding and real bundled sample (9 checks;
   requires WebGL and WebM recording). Allow approximately 25 seconds. Leaves the
   sample ready for keyboard and mobile inspection.
+- `/tests/choreography.html`: authored dance quality constraints (4 checks).
+  Verifies both dances move all ten bones, loop without a pose discontinuity,
+  retain connected rigid limbs, and maintain sole height through actual Pixi
+  transforms at 120 time samples per second. Leaves an eight-pose contact sheet.
 
 Each page ends with `PASS: N checks` or `FAIL: ...`. No test dependencies are required.
 The parser checks compare every output pixel against its configured source region,
