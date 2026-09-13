@@ -16,3 +16,12 @@ export type MotionData = {
   loop: boolean;
   tracks: Partial<Record<BoneName, MotionKeyframe[]>>;
 };
+
+export type MotionTransform = Required<Omit<MotionKeyframe, "time">>;
+
+export type PlaybackState = {
+  currentTime: number;
+  duration: number;
+  speed: number;
+  isPlaying: boolean;
+};

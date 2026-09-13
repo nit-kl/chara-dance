@@ -32,6 +32,6 @@ export async function validateCharacterSheet(file: File): Promise<ValidationResu
     bitmap.close();
     return result;
   } catch {
-    return { ok: false, message: "画像を読み込めませんでした。" };
+    return { ok: false, message: "この画像は読み込めませんでした。2048×2048pxのPNG画像を使用してください。" };
   }
 }
