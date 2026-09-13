@@ -1,8 +1,5 @@
 import { CHARACTER_SHEET_V1 } from "../config/characterSheetV1";
-
-export type ValidationResult =
-  | { ok: true; width: number; height: number }
-  | { ok: false; message: string };
+import type { ValidationResult } from "../types/character";
 
 export async function validateCharacterSheet(file: File): Promise<ValidationResult> {
   const spec = CHARACTER_SHEET_V1;
@@ -16,6 +13,13 @@ export async function validateCharacterSheet(file: File): Promise<ValidationResu
   }
 
   try {
+    // MIME metadata alone does not establish the file's actual format.
+    const signature = new Uint8Array(await file.slice(0, 8).arrayBuffer());
+    const pngSignature = [137, 80, 78, 71, 13, 10, 26, 10];
+    if (!pngSignature.every((byte, index) => signature[index] === byte)) {
+      return { ok: false, message: "PNG画像を選択してください。" };
+    }
+
     const bitmap = await createImageBitmap(file);
     const result =
       bitmap.width === spec.width && bitmap.height === spec.height

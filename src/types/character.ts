@@ -30,3 +30,19 @@ export type CharacterSheetSpec = {
   mimeType: "image/png";
   parts: Record<BoneName, CharacterPartSpec>;
 };
+
+export type ValidationResult =
+  | { ok: true; width: number; height: number }
+  | { ok: false; message: string };
+
+export type ParsedPart = {
+  name: BoneName;
+  canvas: HTMLCanvasElement;
+  width: number;
+  height: number;
+  pivot: Pivot;
+};
+
+export type ParsedCharacter = {
+  parts: Record<BoneName, ParsedPart>;
+};

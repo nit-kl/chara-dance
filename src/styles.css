@@ -89,7 +89,67 @@ h1 {
   color: #ff9d9d;
 }
 
+.partPreview {
+  margin-top: 32px;
+}
+
+.characterPreview {
+  margin-top: 32px;
+  min-width: 0;
+}
+
+.characterCanvas {
+  width: 100%;
+  height: clamp(320px, 60vw, 600px);
+  overflow: hidden;
+  border-radius: 16px;
+  background: #171d29;
+}
+
+.characterCanvas canvas {
+  display: block;
+}
+
+.partGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.partCard {
+  min-width: 0;
+  padding: 16px;
+  border: 1px solid #29303d;
+  border-radius: 16px;
+  background: #141924;
+}
+
+.partCard h3 {
+  margin-top: 0;
+  overflow-wrap: anywhere;
+}
+
+.partCard p {
+  margin: 12px 0 0;
+  color: #aeb6c5;
+}
+
+.partImage {
+  background-color: #e2e2e2;
+  background-image: conic-gradient(#b8b8b8 25%, transparent 0 50%, #b8b8b8 0 75%, transparent 0);
+  background-size: 20px 20px;
+}
+
+.partImage canvas {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
 @media (max-width: 640px) {
+  .partGrid {
+    grid-template-columns: 1fr;
+  }
   .appShell {
     padding: 40px 0;
   }

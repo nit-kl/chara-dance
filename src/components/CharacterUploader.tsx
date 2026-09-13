@@ -1,11 +1,13 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { validateCharacterSheet } from "../character/validateCharacterSheet";
 
 type Props = {
-  onValidFile: (file: File) => void;
+  onValidFile: (file: File) => Promise<void>;
+  onSelectionChange: () => void;
 };
 
-export function CharacterUploader({ onValidFile }: Props) {
+export function CharacterUploader({ onValidFile, onSelectionChange }: Props) {
+  const validationId = useRef(0);
   const [message, setMessage] = useState<string>("2048×2048pxのPNGを選択してください。");
   const [isError, setIsError] = useState(false);
 
@@ -13,10 +15,15 @@ export function CharacterUploader({ onValidFile }: Props) {
     const file = event.target.files?.[0];
     if (!file) return;
 
+    const currentId = ++validationId.current;
+    event.target.value = "";
+    onSelectionChange();
+
     setMessage("確認中...");
     setIsError(false);
 
     const result = await validateCharacterSheet(file);
+    if (currentId !== validationId.current) return;
 
     if (!result.ok) {
       setMessage(result.message);
@@ -24,8 +31,16 @@ export function CharacterUploader({ onValidFile }: Props) {
       return;
     }
 
-    setMessage("キャラシートを読み込みました。");
-    onValidFile(file);
+    setMessage("パーツを切り出しています...");
+    try {
+      await onValidFile(file);
+      if (currentId !== validationId.current) return;
+      setMessage("10パーツを読み込みました。");
+    } catch {
+      if (currentId !== validationId.current) return;
+      setMessage("パーツを切り出せませんでした。画像を確認して、もう一度選択してください。");
+      setIsError(true);
+    }
   }
 
   return (
@@ -38,7 +53,7 @@ export function CharacterUploader({ onValidFile }: Props) {
         <input type="file" accept="image/png" onChange={handleChange} hidden />
       </label>
 
-      <p className={isError ? "message error" : "message"}>{message}</p>
+      <p role="status" className={isError ? "message error" : "message"}>{message}</p>
 
       <a href="/templates/character-sheet-v1.png" download>
         テンプレートPNGをダウンロード
