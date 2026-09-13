@@ -1,0 +1,56 @@
+{
+  "id": "cute-dance",
+  "name": "Cute Dance",
+  "duration": 4,
+  "loop": true,
+  "tracks": {
+    "body": [
+      {
+        "time": 0,
+        "rotation": -2,
+        "x": 0,
+        "y": 0
+      },
+      {
+        "time": 0.5,
+        "rotation": 2,
+        "x": 4,
+        "y": -4
+      },
+      {
+        "time": 1.0,
+        "rotation": -2,
+        "x": -4,
+        "y": 0
+      }
+    ],
+    "leftUpperArm": [
+      {
+        "time": 0,
+        "rotation": -20
+      },
+      {
+        "time": 0.5,
+        "rotation": 45
+      },
+      {
+        "time": 1.0,
+        "rotation": -20
+      }
+    ],
+    "rightUpperArm": [
+      {
+        "time": 0,
+        "rotation": 20
+      },
+      {
+        "time": 0.5,
+        "rotation": -45
+      },
+      {
+        "time": 1.0,
+        "rotation": 20
+      }
+    ]
+  }
+}
